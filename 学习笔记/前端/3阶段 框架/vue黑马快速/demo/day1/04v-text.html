@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.config.productionTip = false;
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="修改message" @click ='setM'>
+        <input type="text" v-model="message" @keyup.enter ="getM">
+        {{message}}
+    </div>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                message:'乃荣'
+            },
+            methods: {
+                getM(){
+                    alert(this.message)
+                },
+                setM(){
+                    this.message = '小川'
+                }
+            },
+        })
+    </script>
+</body>
+</html>

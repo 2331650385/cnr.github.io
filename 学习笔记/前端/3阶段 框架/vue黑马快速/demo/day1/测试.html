@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .t1{
+            width: 100%;
+            height: 100px;
+            color: blueviolet;
+        }
+        .t2{
+            width: 100%;
+            height: 100px;
+            color: blueviolet;
+        }
+        .t3{
+            width: 100%;
+            height: 100px;
+            color: blueviolet;
+        }
+        .inp{
+            width: 100%;
+            height: 30px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div>
+        <input id="in1" type="text" placeholder="请输入税前工资" class="inp" >
+        <button class="t1" onclick="f1()">个人所得税计算</button>
+    </div>
+    <div>
+        <input id="in2" type="text" placeholder="请输入贷款金额" class="inp" >
+        <input id="in3" type="text" placeholder="请输入贷款年限" class="inp" >
+        <input id="in4" type="text" placeholder="请输入贷款利息" class="inp" >
+        <input id="in5" type="text" placeholder="请输入还款方式" class="inp" >
+        <button class="t2" onclick="f2()">银行贷款计算</button>
+    </div> <div>
+        <button class="t3" onclick="f3()">求24的所有可能</button>
+    </div>
+
+    <script>
+        function f1(){
+            let sq_money = document.getElementById('in1').value
+            console.log(sq_money);
+            // 计算五险一金
+            sq_money -= (sq_money*0.08 + sq_money*0.005 + sq_money*0.002)
+
+            if (sq_money<36000){
+                sq_money -= sq_money* 0.03
+            }else if(36000<=sq_money<144000){
+                sq_money -= sq_money* 0.1
+            }else if(144000<=sq_money<300000){
+                sq_money -= sq_money* 0.2
+
+            }else if(300000<=sq_money<420000){
+                sq_money -= sq_money* 0.25
+
+            }else if(420000<=sq_money<660000){
+                sq_money -= sq_money* 0.3
+
+            }else if(660000<=sq_money<960000){
+                sq_money -= sq_money* 0.35
+
+            }else{
+                sq_money -= sq_money* 0.45
+
+            }
+            alert(`税后工资为:${sq_money}`)
+        }
+        
+        function f2(){
+
+        }
+        function f3(){
+            var a = 0
+            result = []
+            var res = []
+            let ysb = ['+','-','*','/']
+            for(var x1 = 1;x1<10;x1++){
+                for(var x2 = 1;x2<10;x2++){
+                    for(var x3 = 1;x3<10;x3++){
+                        ysb.forEach(s1 => {
+                            ysb.forEach(s2 =>{        
+                                v = `${x1}${s1}${x2}${s2}${x3}`
+                                if (eval(v) == 24){
+                                    var te = [x1,x2,x3]
+                                    te.sort()
+                                    var te2 = JSON.stringify(te)
+                                    if ( res.indexOf(te2) == -1){
+                                        res.push(te2)
+                                        result.push(`${v}=24\n`)
+                                        a++
+                                    }
+                                }
+                            })
+                        });
+                    }
+                }
+            }
+            alert(result)
+        }
+    </script>
+</body>
+</html>

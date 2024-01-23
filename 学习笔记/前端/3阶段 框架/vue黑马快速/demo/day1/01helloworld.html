@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.config.productionTip = false;
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        {{message}}
+    </div>
+    <script>
+        new Vue({
+            el:'#root',
+            data:{
+                message:"Hello Vue!"
+            }
+        })
+    </script>
+</body>
+</html>

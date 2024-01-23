@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.config.productionTip = false;
+    </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="获取笑话" @click="getJoke">
+        <p>{{joke}}</p>
+    </div>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                joke:'一个笑话'
+            },
+            methods: {
+                getJoke(){
+                    let _this = this;
+                    axios.get("https://autumnfish.cn/api/joke")
+                    .then(function(response){
+                        _this.joke = response.data
+                    },function(err){
+                        console.log(err);
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+</html>

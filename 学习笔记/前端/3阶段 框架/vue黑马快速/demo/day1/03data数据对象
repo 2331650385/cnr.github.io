@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../js/vue.js"></script>
+    <script>
+        Vue.config.productionTip = false;
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{message}}
+        <span>{{message}}</span>
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                message:"乃荣程序员!"
+            }
+        })
+    </script>
+</body>
+</html>
