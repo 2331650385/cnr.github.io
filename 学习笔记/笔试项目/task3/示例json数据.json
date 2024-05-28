@@ -1,0 +1,12 @@
+{
+"campany":"测试企业",
+"legalName":"测试企业法人",
+"legalPhone":"15500000000",
+"employeeInfor": [
+  {"num":"1","name":"张三","idcard":"4222222222221","birthday":"19990101"},
+  {"num":"2","name":"李四","idcard":"4222222222222","birthday":"19990103"},
+  {"num":"3","name":"王五","idcard":"4222222222223","birthday":"19990102"},
+  {"num":"4","name":"赵六","idcard":"4222222222224","birthday":"19990104"},
+  {"name":"刘七","idcard":"4222222222225","birthday":"19990105"}
+]
+}

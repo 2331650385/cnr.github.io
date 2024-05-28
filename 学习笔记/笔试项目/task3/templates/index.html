@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公司信息表格</title>
+    <script>
+        function addEmployee() {
+            var empDiv = document.createElement('div');
+            var empCount = document.getElementsByClassName('emp').length + 1;
+
+            empDiv.className = 'emp';
+            empDiv.innerHTML = `
+                <h3>员工 ${empCount}</h3>
+                <label for="num${empCount}">编号:</label>
+                <input type="text" id="num${empCount}" name="num${empCount}"><br>
+
+                <label for="name${empCount}">姓名:</label>
+                <input type="text" id="name${empCount}" name="name${empCount}"><br>
+
+                <label for="idcard${empCount}">身份证:</label>
+                <input type="text" id="idcard${empCount}" name="idcard${empCount}"><br>
+
+                <label for="birthday${empCount}">出生年月:</label>
+                <input type="text" id="birthday${empCount}" name="birthday${empCount}"><br><br>
+            `;
+
+            document.getElementById('employees').appendChild(empDiv);
+        }
+
+        function submitForm() {
+            var data = {
+                company: document.getElementById('company').value,
+                legalName: document.getElementById('legalName').value,
+                legalPhone: document.getElementById('legalPhone').value,
+                employeeInfor: []
+            };
+
+            var employees = document.getElementsByClassName('emp');
+            for (var i = 0; i < employees.length; i++) {
+                var num = document.getElementById('num' + (i + 1)).value;
+                var name = document.getElementById('name' + (i + 1)).value;
+                var idcard = document.getElementById('idcard' + (i + 1)).value;
+                var birthday = document.getElementById('birthday' + (i + 1)).value;
+                data.employeeInfor.push({ num: num, name: name, idcard: idcard, birthday: birthday });
+            }
+
+            fetch('/generate_docx', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = "公司信息.docx";
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>填写公司信息</h1>
+    <form onsubmit="event.preventDefault(); submitForm();">
+        <label for="company">公司名称:</label>
+        <input type="text" id="company" name="company" value="{{ data.company }}" required><br><br>
+
+        <label for="legalName">公司法人:</label>
+        <input type="text" id="legalName" name="legalName" value="{{ data.legalName }}" required><br><br>
+
+        <label for="legalPhone">法人联系方式:</label>
+        <input type="text" id="legalPhone" name="legalPhone" value="{{ data.legalPhone }}" required><br><br>
+
+        <h2>员工信息</h2>
+        <div id="employees">
+            {% for i in range(1, data.employeeInfor | length + 1) %}
+            <div class="emp">
+                <h3>员工 {{ i }}</h3>
+                <label for="num{{ i }}">编号:</label>
+                <input type="text" id="num{{ i }}" name="num{{ i }}" value="{{ data.employeeInfor[i-1].num }}"><br>
+
+                <label for="name{{ i }}">姓名:</label>
+                <input type="text" id="name{{ i }}" name="name{{ i }}" value="{{ data.employeeInfor[i-1].name }}"><br>
+
+                <label for="idcard{{ i }}">身份证:</label>
+                <input type="text" id="idcard{{ i }}" name="idcard{{ i }}" value="{{ data.employeeInfor[i-1].idcard }}"><br>
+
+                <label for="birthday{{ i }}">出生年月:</label>
+                <input type="text" id="birthday{{ i }}" name="birthday{{ i }}" value="{{ data.employeeInfor[i-1].birthday }}"><br><br>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="button" onclick="addEmployee()">添加员工</button><br><br>
+        <input type="submit" value="生成文档">
+    </form>
+</body>
+</html>
